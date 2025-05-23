@@ -1,6 +1,6 @@
+import { Post } from "@/modules/Post";
 import { sanityFetch } from "@/sanity/lib/live";
 import { POST_QUERY } from "@/sanity/lib/queries";
-import { Post } from "@/modules/Post";
 import { notFound } from "next/navigation";
 
 export default async function Page({
