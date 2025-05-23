@@ -6,6 +6,6 @@ export const QUERY_POSTS =
 }`);
 
 export const QUERY_POST =
-  defineQuery(`*[_type == "post" && slug.current == $Slug][0] {
+  defineQuery(`*[_type == "post" && slug.current == $slug][0] {
     title, body, mainImage
 }`);
