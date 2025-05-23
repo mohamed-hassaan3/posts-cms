@@ -1,25 +1,25 @@
-import Notfound from "@/app/not-found";
 import { sanityFetch } from "@/sanity/lib/live";
-import { QUERY_POST } from "@/sanity/lib/queries";
-import Link from "next/link";
-import React from "react";
+import { POST_QUERY } from "@/sanity/lib/queries";
+import { Post } from "@/modules/Post";
+import { notFound } from "next/navigation";
 
-const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { data: post } = await sanityFetch({
-    query: QUERY_POST,
+    query: POST_QUERY,
     params: await params,
   });
-  console.log(post);
+
   if (!post) {
-    Notfound();
+    notFound();
   }
+
   return (
     <main className="container mx-auto grid grid-cols-1 gap-6 p-12">
-      <h1 className="text-4xl font-bold text-balance">{post?.title}</h1>
-      <hr />
-      <Link href="/posts">&larr; Return to index</Link>
+      <Post {...post} />
     </main>
   );
-};
-
-export default page;
+}

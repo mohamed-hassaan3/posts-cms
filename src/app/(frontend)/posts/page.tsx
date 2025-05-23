@@ -1,32 +1,19 @@
 import { sanityFetch } from "@/sanity/lib/live";
-import { QUERY_POSTS } from "@/sanity/lib/queries";
-import Link from "next/link";
-import React from "react";
+import { POSTS_QUERY } from '@/sanity/lib/queries'
+import { Title } from '@/components/Title'
+import { PostCard } from "@/modules/PostCard";
 
-const page = async () => {
-  const { data: posts } = await sanityFetch({ query: QUERY_POSTS });
-  console.log(posts);
+export default async function Page() {
+  const {data: posts} = await sanityFetch({query: POSTS_QUERY});
+
   return (
-    <main className="flex flex-col p-4">
-      <button className="py-1 px-4 w-fit bg-gray-400 text-black text-lg font-thin rounded-md">
-        <Link href={`/`}>Back</Link>
-      </button>
-      <article className="my-12 space-y-6">
-        <h1 className="text-xl font-semibold">Index of Posts</h1>
-        <ul className="grid md:grid-cols-2 grid-cols-1 gap-x-16 gap-y-6">
-          {posts &&
-            posts.map((post) => (
-              <li
-                key={post._id}
-                className="px-2 py-4 bg-amber-100 rounded-sm hover:bg-amber-200 cursor-pointer"
-              >
-                <Link href={`/posts/${post?.slug?.current}`}>{post.title}</Link>
-              </li>
-            ))}
-        </ul>
-      </article>
+    <main className="container mx-auto grid grid-cols-1 gap-6 p-12">
+      <Title>Post Index</Title>
+      <div className="flex flex-col gap-24 py-12">
+        {posts.map((post) => (
+          <PostCard key={post._id} {...post} />
+        ))}
+      </div>
     </main>
-  );
-};
-
-export default page;
+  )
+}
