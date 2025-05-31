@@ -27,6 +27,14 @@ export function Header() {
               Sanity Studio
             </Link>
           </li>
+          <li>
+            <Link
+              className="hover:text-pink-500 transition-colors"
+              href="/contact-us"
+            >
+              Contact us
+            </Link>
+          </li>
         </ul>
       </header>
     </div>
