@@ -1,15 +1,65 @@
-import React from 'react'
+import React from "react";
+import { Title } from "./Title";
+import { FormControl, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { Textarea } from "./ui/textarea";
 
-const ContactUsForm = ({formValues, onChange, onSubmit}: WithFormProps) => {
+const ContactUsForm = ({
+  handleSubmit,
+  register,
+  errors,
+  isSubmitting,
+}: WithFormProps<ContactFormProps>) => {
   return (
-    <form onSubmit={onSubmit} className='*:border flex flex-col *:my-6 w-1/2 m-auto *:p-2'>
-      <input type="text" name='name' value={formValues.name || ""} onChange={onChange} />
-      <input type="email" name='email' value={formValues.email || ""} onChange={onChange} />
-      <input type="subject" name='subject' value={formValues.subject || ""} onChange={onChange} />
-      <input type="message" name='message' value={formValues.message || ""} onChange={onChange} />
-      <button className='bg-amber-200 cursor-pointer'>Submit</button>
-    </form>
-  )
-}
+    <form className="max-w-md w-full mx-auto space-y-6" onSubmit={handleSubmit}>
+      <Title>Contact us</Title>
 
-export default ContactUsForm
+      <FormItem>
+        <FormLabel>Name</FormLabel>
+        <FormControl>
+          <Input placeholder="Enter your name" {...register("name")} />
+        </FormControl>
+        <FormMessage>{errors.name?.message}</FormMessage>
+      </FormItem>
+
+      <FormItem>
+        <FormLabel>Email</FormLabel>
+        <FormControl>
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            {...register("email")}
+          />
+        </FormControl>
+        <FormMessage>{errors.email?.message}</FormMessage>
+      </FormItem>
+
+      <FormItem>
+        <FormLabel>Subject</FormLabel>
+        <FormControl>
+          <Input placeholder="Enter subject" {...register("subject")} />
+        </FormControl>
+        <FormMessage>{errors.subject?.message}</FormMessage>
+      </FormItem>
+
+      <FormItem>
+        <FormLabel>Message</FormLabel>
+        <FormControl>
+          <Textarea
+            placeholder="Enter your message"
+            className="min-h-[100px]"
+            {...register("message")}
+          />
+        </FormControl>
+        <FormMessage>{errors.message?.message}</FormMessage>
+      </FormItem>
+
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Submit"}
+      </Button>
+    </form>
+  );
+};
+
+export default ContactUsForm;

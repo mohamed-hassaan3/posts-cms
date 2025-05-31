@@ -1,13 +1,19 @@
+import { FieldError, UseFormRegister } from "react-hook-form";
+
 export {};
+
 declare global {
-
-  type FormValuesProps = {
-    [key: string]: value
+  type WithFormProps<T> = {
+    register: UseFormRegister<T>;
+    errors: FieldError<T>;
+    isSubmitting: boolean;
+    handleSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   };
 
-  type WithFormProps = {
-    formValues: FormValuesProps;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  };
+  type ContactFormProps = {
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
+  }
 }

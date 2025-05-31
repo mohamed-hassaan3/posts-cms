@@ -1,18 +1,16 @@
-"use client"
+"use client";
+
 import ContactUsForm from "@/components/ContactUsForm";
 import { withForm } from "@/hoc/withForm";
-import React from "react";
+import { contactUsValidation } from "@/util/formValidation";
+import { SubmitHandler } from "react-hook-form";
 
-const Form = () => {
-  const handleSubmit = (values: FormValuesProps) => {
-    console.log("Submit Form", values);
-  };
-  const SubmitWithForm = withForm(ContactUsForm, handleSubmit);
-  return (
-    <div>
-      <SubmitWithForm />
-    </div>
-  );
+const onSubmit: SubmitHandler<ContactFormProps> = async (data) => {
+  console.log("Submit Form", data);
 };
-
+const Form = withForm<object, ContactFormProps>(
+  ContactUsForm,
+  onSubmit,
+  contactUsValidation
+);
 export default Form;
