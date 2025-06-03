@@ -1,9 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Removed unsupported @custom-variant, @plugin, and @theme at-rules. */
-/* If you need custom properties, define them in :root or a selector. */
-:root {
+@custom-variant dark (&:is(.dark *));
+@plugin "@tailwindcss/typography";
+
+@theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -108,18 +109,4 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-}
-
-@layer base {
-  * {
-    border-color: var(--color-border);
-    outline-color: var(--color-ring);
-    outline-width: 2px;
-    outline-style: solid;
-    outline-offset: 0.5px;
-  }
-  body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-  }
 }
