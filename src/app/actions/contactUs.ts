@@ -2,7 +2,12 @@
 import { client } from "@/sanity/lib/client";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resendApiKey = process.env.RESEND_API_KEY;
+if (!resendApiKey) {
+  throw new Error("Missing RESEND_API_KEY environment variable");
+}
+
+const resend = new Resend(resendApiKey);
 
 export const submitContactAction = async (formValues: ContactFormProps) => {
   const name = formValues.name.toString() || "";
@@ -49,7 +54,7 @@ export const submitContactAction = async (formValues: ContactFormProps) => {
     try {
       await resend.emails.send({
         from: "Contact Form <onboarding@resend.dev>",
-        to: ["mmhassaan3@gmail.com", "mmhassaan3@gmail.com"],
+        to: "mmhassaan3@gmail.com",
         subject: `New Contact Form Submission: ${subject}`,
         html: `
           <h2>New Contact Form Submission</h2>
