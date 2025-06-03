@@ -18,3 +18,14 @@ function assertValue<T>(v: T | undefined, errorMessage: string): T {
 
   return v
 }
+
+export const sanityToken = process.env.NEXT_PUBLIC_SANITY_API_TOKEN || "";
+
+function assertToken(token: string) {
+  if (!token) {
+    throw new Error("Missing environment variable: SANITY_API_TOKEN");
+  }
+  return token;
+}
+
+export const validatedSanityToken = assertToken(sanityToken);
