@@ -11,20 +11,32 @@ export const projectId = assertValue(
   'Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID'
 )
 
-function assertValue<T>(v: T | undefined, errorMessage: string): T {
-  if (v === undefined) {
+function assertValue<T>(value: T | undefined, errorMessage: string): T {
+  if (value === undefined) {
     throw new Error(errorMessage)
   }
 
-  return v
+  return value
 }
-export const sanityToken = process.env.SANITY_API_TOKEN || "";
 
-function assertToken(token: string) {
+// Token for client-side (Studio) operations
+export const studioToken = process.env.NEXT_PUBLIC_SANITY_API_TOKEN || '';
+// Token for server-side operations (like contact form)
+export const serverToken = process.env.SANITY_API_TOKEN || process.env.NEXT_PUBLIC_SANITY_API_TOKEN || '';
+
+function assertToken(token: string, isStudio: boolean = false) {
   if (!token) {
-    throw new Error("Missing environment variable: SANITY_API_TOKEN");
+    if (isStudio) {
+      throw new Error("Missing environment variable: NEXT_PUBLIC_SANITY_API_TOKEN");
+    } else {
+      throw new Error("Missing environment variables: SANITY_API_TOKEN and NEXT_PUBLIC_SANITY_API_TOKEN");
+    }
   }
   return token;
 }
 
-export const validatedSanityToken = assertToken(sanityToken);
+// Use this for Studio operations
+export const validatedStudioToken = assertToken(studioToken, true);
+
+// Use this for server-side operations
+export const validatedServerToken = assertToken(serverToken);

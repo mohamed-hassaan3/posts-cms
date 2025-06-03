@@ -13,7 +13,12 @@ const ContactUsForm = ({
 }: WithFormProps<ContactFormProps>) => {
   return (
     <form className="max-w-md w-full mx-auto space-y-6" onSubmit={handleSubmit}>
-      <Title>Contact us</Title>
+      <Title>
+        Contact us{" "}
+        <p className="text-xs">
+          this is just Demo, you will not receive verification via E-mail
+        </p>
+      </Title>
 
       <FormItem>
         <FormLabel>Name</FormLabel>
